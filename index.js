@@ -1,11 +1,17 @@
 import builder from 'botbuilder';
-import dotenv from 'dotenv';
+import builderAzure from 'botbuilder-azure';
+import restify from 'restify';
 
-dotenv.config();
-
-let connector = new builder.ConsoleConnector().listen();
+let connector = new botbuilder_azure.BotServiceConnector({
+   appId: process.env['MicrosoftAppId'],
+   appPassword: process.env['MicrosoftAppPassword'],
+   stateEndpoint: process.env['BotStateEndpoint'],
+   openIdMetadata: process.env['BotOpenIdMetadata']
+});
 
 let bot = new builder.UniversalBot(connector, (session) => {
   session.send(`Application ID: ${process.env.APP_ID}`);
   // session.send(`${session.message.user.name} says ${session.message.text}`);
 });
+
+export default connector.listen();
