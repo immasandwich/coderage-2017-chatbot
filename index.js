@@ -1,6 +1,6 @@
-import builder from 'botbuilder';
-import builderAzure from 'botbuilder-azure';
-import restify from 'restify';
+const builder = require('botbuilder');
+const builderAzure = require('botbuilder-azure');
+const restify = require('restify');
 
 let connector = new builderAzure.BotServiceConnector({
    appId: process.env['MicrosoftAppId'],
@@ -13,4 +13,4 @@ let bot = new builder.UniversalBot(connector, (session) => {
   session.send(`${session.message.user.name} says ${session.message.text}`);
 });
 
-export default connector.listen();
+module.exports = { default: connector.listen() };
